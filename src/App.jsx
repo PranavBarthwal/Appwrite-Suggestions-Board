@@ -110,7 +110,7 @@ function App() {
               <button
               onClick={() => deleteDocument(suggestion.$id)}
               >
-                <img src="./public/delete.png" className="w-7" />
+                <img src="https://cdn-icons-png.flaticon.com/128/4980/4980658.png" className="w-7" />
               </button>
             </div>
           </li>
