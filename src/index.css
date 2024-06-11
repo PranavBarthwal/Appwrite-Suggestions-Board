@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 body{
-    height: 100vh;
+    height: 100%;
     background: rgb(25,25,29);
     background: linear-gradient(180deg, rgba(25,25,29,1) 45%, rgba(253,54,110,1) 100%);
     font-family: 'Poppins', sans-serif;
     color: #EDEDF0;
+    background-attachment: fixed;
 }
