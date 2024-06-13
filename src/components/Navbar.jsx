@@ -42,7 +42,6 @@ function ResponsiveAppBar() {
         backdropFilter: 'blur(100px)', 
         boxShadow: '10px 10px 10px rgba(0,0,0,0.1)', 
         borderRadius: '10px', 
-        width: '40%',
         margin: `2rem auto`,
 
      }}>

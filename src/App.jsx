@@ -1,38 +1,52 @@
-import { DB_ID, COLLECTION_ID, databases, ID } from "./lib/appwrite"
-import { useState, useEffect } from 'react'
+import { DB_ID, COLLECTION_ID, databases, ID } from "./lib/appwrite";
+import { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
 
 function App() {
-
-  const [suggestions, setSuggestions] = useState([])
-  const [suggestionText, setSuggestionText] = useState('')
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestionText, setSuggestionText] = useState("");
 
   useEffect(() => {
-    getSuggestions()
-  }, [])
+    getSuggestions();
+  }, []);
 
   async function getSuggestions() {
     const res = await databases.listDocuments(DB_ID, COLLECTION_ID);
-    console.log(res)
-    setSuggestions(res.documents.reverse())
+    console.log(res);
+    setSuggestions(res.documents.reverse());
   }
 
   function handleInput(e) {
-    setSuggestionText(e.target.value)
+    setSuggestionText(e.target.value);
   }
 
   async function addSuggestion(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     if (suggestionText) {
       await databases.createDocument(DB_ID, COLLECTION_ID, ID.unique(), {
         text: suggestionText,
-        completed: false
-      })
+        completed: false,
+      });
     }
 
-    setSuggestionText('')
+    setSuggestionText("");
 
-    getSuggestions()
+    getSuggestions();
+  }
+
+  async function updateDocument(id, completed) {
+    await databases.updateDocument(DB_ID, COLLECTION_ID, id, {
+      completed: completed,
+    });
+
+    getSuggestions();
+  }
+
+  async function deleteDocument(id) {
+    await databases.deleteDocument(DB_ID, COLLECTION_ID, id);
+
+    getSuggestions();
   }
 
 
@@ -40,8 +54,8 @@ function App() {
 
 
   return (
-
-    <main className="mt-5 max-w-3xl w-full mx-auto">
+    <main className="mt-5 max-w-4xl w-full mx-auto mb-[4rem]">
+      <Navbar />
 
       <form
         onSubmit={addSuggestion}
@@ -52,9 +66,7 @@ function App() {
           onInput={handleInput}
           placeholder="Enter your suggestion here..."
           className="bg-slate-800 shadow-xl w-full h-20 p-4 rounded-xl disabled:bg-slate-900 disabled:placeholder:text-slate-500 disabled:cursor-not-allowed"
-        >
-
-        </textarea>
+        ></textarea>
         <button
           type="submit"
           className="bg-[rgba(253,54,110,1)] px-6 py-2 rounded shadow ml-auto transition hover:bg-[#EDEDF0] hover:text-[rgba(253,54,110,1)]"
@@ -65,23 +77,47 @@ function App() {
 
       <hr></hr>
 
-
       <ul className="space-y-4 mt-[2rem]">
         {suggestions.map((suggestion) => (
           <li
             key={suggestion.$id}
-            className="flex items-center border border-white/20 p-4 rounded shadow gap-2"
+            className="flex items-center border border-[#EDEDF0] p-4 rounded shadow gap-2"
           >
-            <span className="text-2xl font-bold">{suggestion.completed ? '✅' : null}</span>
-            <h2 className="text-xl font-semibold">{suggestion.text}</h2>
+            <span className="text-2xl font-bold">
+              {suggestion.completed ? "✅" : "📄"}
+            </span>
+
+            <text
+              className={`text-[1rem] ${
+                suggestion.completed
+                  ? "text-slate-500 line-through decoration-2 decoration-slate-500"
+                  : ""
+              }`}
+            >
+              {suggestion.text}
+            </text>
+
+            <div className="ml-auto min-w-[7rem] flex items-center">
+              <input
+                onChange={() =>
+                  updateDocument(suggestion.$id, !suggestion.completed)
+                }
+                type="checkbox"
+                checked={suggestion.completed}
+                className="ml-auto cursor-pointer mr-2"
+              />
+
+              <button
+              onClick={() => deleteDocument(suggestion.$id)}
+              >
+                <img src="./public/delete.png" className="w-7" />
+              </button>
+            </div>
           </li>
         ))}
-
       </ul>
-
     </main>
-
-  )
+  );
 }
 
-export default App
+export default App;
