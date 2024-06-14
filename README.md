@@ -1,8 +1,48 @@
-# React + Vite
+# Suggestions Board App Using Appwrite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![alt text](<Screenshot 2024-06-14 210458.png>)
 
-Currently, two official plugins are available:
+## Tech Used 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Appwrite** for Database
+- **React** for frontend
+- **Vite** 
+
+## Project Setup
+
+### Clone the repository:
+
+```bash
+git clone <repository-url>
+```
+
+### Install dependencies:
+
+```bash
+npm install
+```
+
+### Start the development server:
+
+```bash
+npm run dev
+```
+
+### Build for production:
+
+```bash
+npm run build
+```
+
+### Run tests:
+
+```bash
+npm test
+```
+
+## Additional Notes
+
+- **Best Practices**: Follow best practices for React development, such as componentization, state management, and efficient rendering.
+- **Dependency Updates**: Regularly update dependencies to benefit from new features, bug fixes, and security patches.
+
+Feel free to reach out if you have any questions or need further assistance! 🚀
